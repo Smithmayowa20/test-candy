@@ -25,6 +25,18 @@ import { createTheme, ThemeProvider } from "@material-ui/core";
 import Background from './background.jpeg';
 import { CenterFocusStrong } from "@material-ui/icons";
 
+import {
+  Nav,
+  NavLogo,
+  NavLink,
+  Bars,
+  NavMenu,
+  NavBtn,
+  NavBtnLink,
+} from "./NavbarElements";
+
+import { BrowserRouter as Router, Route } from "react-router-dom";
+
 const treasury = new anchor.web3.PublicKey(
   process.env.REACT_APP_TREASURY_ADDRESS!
 );
@@ -72,7 +84,7 @@ const theme = createTheme({
 });
 
 var sectionStyle = {
-  paddingTop: "250px",
+  paddingTop: "200px",
   paddingBottom: "250px",
   width: "100%",
   height: "100%",
@@ -85,6 +97,37 @@ var divStyle = {
   justifyContent: 'center',
   alignItems: 'center'
 }
+
+const Navbar = () => {
+  return (
+      <>
+         <Nav>
+          <NavLogo to="/">
+              Auction Store
+          </NavLogo>
+          <Bars />
+
+          <NavMenu>
+              <NavLink to="/" >
+                  Home
+              </NavLink>
+              <NavLink to="/about" >
+                  About
+              </NavLink>
+              <NavLink to="/contact" >
+                  Contact
+              </NavLink>
+              <NavLink to="/signin" >
+                  Team
+              </NavLink>
+              <NavBtn>
+                  <NavBtnLink to="/sign-up">Go To Store</NavBtnLink>                
+              </NavBtn>
+          </NavMenu> 
+         </Nav> 
+      </>
+  );
+};
 
 const App = () => {
   const endpoint = useMemo(() => clusterApiUrl(network), []);
@@ -105,6 +148,9 @@ const App = () => {
         <ConnectionProvider endpoint={endpoint}>
           <WalletProvider wallets={wallets} autoConnect={true}>
             <WalletDialogProvider>
+              <Router>
+                <Navbar/>
+              </Router>
               <div style={ sectionStyle }>
                 <h2> Welcome to Auction Store<br/></h2>
                 <p> We provide the most rare mint collections around the internet,<br/>
